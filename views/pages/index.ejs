@@ -10,6 +10,12 @@
 
     <div class="container" id="chat-box">
         <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm|md|lg|xl-5">
+                <h1 class="display-4 text-info">Tron: Ultimate Chat Bot</h1>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-3"></div>
             <div class="col-sm|md|lg|xl-5">
                 <div class="card">
@@ -22,7 +28,7 @@
                                 <input id="user-text" class="form-control" type="text">
                             </div>
                             <div class="col-sm-5">
-                                <button type="button" class="btn btn-outline-success" onclick="interact()">Chat With Bot</button>
+                                <button type="button" class="btn btn-outline-success" onclick="interact()">Chat With Tron</button>
                             </div>
                         </div>
                     </div>
@@ -51,6 +57,14 @@
     </style>
 
     <script>
+
+        //event listner
+        document.getElementById("chat-box").addEventListener('keypress',function(event){
+            if(event.which === 13){
+                interact();
+            }
+        })
+
         function interact() {
             if (document.getElementById("user-text").value !== ''){
                 writeUserOutput();
