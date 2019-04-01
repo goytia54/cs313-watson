@@ -4,94 +4,145 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 
+
     <div class="container" id="chat-box">
+
         <div class="row">
             <div class="col-sm-2"></div>
             <div class="col-sm|md|lg|xl-5">
                 <h1 class="display-4 text-info">Tron: Ultimate Chat Bot</h1>
             </div>
         </div>
-        <div class="row">
+        <div id="nav-column" class="row">
             <div class="col-sm-3"></div>
             <div class="col-sm|md|lg|xl-5">
-                <div class="card">
-                    <div id="convo-text">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#chat-div">Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#train-div">Train</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div id="chat-div" class="tab-pane container active">
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm|md|lg|xl-5">
+                        <div class="card">
+                            <div id="convo-text">
 
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-7">
-                                <input id="user-text" class="form-control" type="text">
                             </div>
-                            <div class="col-sm-5">
-                                <button type="button" class="btn btn-outline-success" onclick="interact()">Chat With Tron</button>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <input id="user-text" class="form-control" type="text">
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <button type="button" class="btn btn-outline-success" onclick="interact()">Chat With Tron</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div id="train-div" class="tab-pane container fade">
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm|md|lg|xl-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <input id="user-text" class="form-control" type="text">
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <button type="button" class="btn btn-outline-success" onclick="interact()">Chat With Tron</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
         </div>
-
+        </div>
     </div>
-
-    <style>
-        .user-output{
-            color: red;
-        }
-
-        .watson-output{
-            color: blue;
-        }
-
-        #convo-text {
-            height: 400px;
-            width: 360px;
-            overflow-y: scroll;
-            margin-top: 10px;
-            margin-left:20px;
-        }
-    </style>
-
-    <script>
-
-        //event listner
-        document.getElementById("chat-box").addEventListener('keypress',function(event){
-            if(event.which === 13){
-                interact();
-            }
-        })
-
-        function interact() {
-            if (document.getElementById("user-text").value !== ''){
-                writeUserOutput();
-                writeWatsonOuput();
-            }
-        }
-
-        function writeUserOutput(){
-            let userTextPara = document.createElement("P");
-            userTextPara.className = "user-output";
-            let userText = document.createTextNode(`User: ${document.getElementById("user-text").value}`);
-            userTextPara.appendChild(userText)
-            document.getElementById('convo-text').appendChild(userTextPara);
-        }
-
-        function writeWatsonOuput() {
-            let watsonTextPara = document.createElement("P");
-            watsonTextPara.className = "watson-output";
-
-            $.post('/watson',{interactionText: document.getElementById("user-text").value},function(data,status){
-                let watsonResponse = document.createTextNode(`Tron: ${data}`);
-                watsonTextPara.appendChild(watsonResponse)
-                document.getElementById('convo-text').appendChild(watsonTextPara);
-            });
-
-        }
-    </script>
 </body>
+<style>
+    .user-output{
+        color: red;
+    }
+
+    .watson-output{
+        color: blue;
+    }
+
+    #nav-column{
+        margin-left: -1px;
+        margin-bottom: -1px;
+    }
+
+    .cards {
+        height: 400px;
+        width: 360px;
+    }
+
+    #convo-text {
+        height: 400px;
+        width: 360px;
+        overflow-y: scroll;
+        margin-top: 10px;
+        margin-left:20px;
+    }
+</style>
+
+<script>
+
+    //event listner
+    document.getElementById("chat-box").addEventListener('keypress',function(event){
+        if(event.which === 13){
+            interact();
+        }
+    })
+
+    function interact() {
+        if (document.getElementById("user-text").value !== ''){
+            writeUserOutput();
+            writeWatsonOuput();
+        }
+    }
+
+    function writeUserOutput(){
+        let userTextPara = document.createElement("P");
+        userTextPara.className = "user-output";
+        let userText = document.createTextNode(`User: ${document.getElementById("user-text").value}`);
+        userTextPara.appendChild(userText)
+        document.getElementById('convo-text').appendChild(userTextPara);
+    }
+
+    function writeWatsonOuput() {
+        let watsonTextPara = document.createElement("P");
+        watsonTextPara.className = "watson-output";
+
+        $.post('/watson',{interactionText: document.getElementById("user-text").value},function(data,status){
+            let watsonResponse = document.createTextNode(`Tron: ${data}`);
+            watsonTextPara.appendChild(watsonResponse)
+            document.getElementById('convo-text').appendChild(watsonTextPara);
+        });
+
+    }
+
+</script>
+
 
 </html>
