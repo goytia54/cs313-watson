@@ -13,5 +13,6 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .post('/watson',watson.messageAssitant)
+  .post('/watson/message',watson.messageAssitant)
+  .post('/watson/update-intent',watson.updateIbmIntent)
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));

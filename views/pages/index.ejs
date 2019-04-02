@@ -62,11 +62,22 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-sm-7">
-                                        <input id="user-text" class="form-control" type="text">
+                                  <h2 class="font-weight-light text-info">Train Tron To Say Hello</h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <input id="new-intent" class="form-control" type="text">
                                     </div>
-                                    <div class="col-sm-5">
-                                        <button type="button" class="btn btn-outline-success" onclick="interact()">Chat With Tron</button>
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-outline-success" onclick="updateIntent()">Train</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div id="success-div" class="alert alert-success messages">
+                                        <strong>Trained!</strong>
+                                    </div>
+                                    <div id="danger-div" class="alert alert-danger messages">
+                                        <strong>Error!</strong> Greeting already exists
                                     </div>
                                 </div>
                             </div>
@@ -104,6 +115,11 @@
         margin-top: 10px;
         margin-left:20px;
     }
+
+    .messages{
+        display: none;
+        margin-top: 10px;
+    }
 </style>
 
 <script>
@@ -134,7 +150,7 @@
         let watsonTextPara = document.createElement("P");
         watsonTextPara.className = "watson-output";
 
-        $.post('/watson',{interactionText: document.getElementById("user-text").value},function(data,status){
+        $.post('/watson/message',{interactionText: document.getElementById("user-text").value},function(data,status){
             let watsonResponse = document.createTextNode(`Tron: ${data}`);
             watsonTextPara.appendChild(watsonResponse)
             document.getElementById('convo-text').appendChild(watsonTextPara);
@@ -142,6 +158,19 @@
 
     }
 
+
+    function updateIntent(){
+        $.post('/watson/update-intent',{newIntentValue: document.getElementById("new-intent").value},function(data,status){
+            if(data.status === 'good'){
+                document.getElementById("success-div").style.display = 'block'
+                document.getElementById("danger-div").style.display = 'none'
+            }
+            else{
+                document.getElementById("success-div").style.display = 'none'
+                document.getElementById("danger-div").style.display = 'block'
+            }
+        })
+    }
 </script>
 
 
